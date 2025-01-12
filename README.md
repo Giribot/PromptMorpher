@@ -40,12 +40,13 @@ Prompt initial:
 Un paysage de montagne avec un lac au coucher du soleil.
 
 Prompts générés avec keyword blending:
-
-'''Un paysage de [montagne : ville : 1.0] avec un [lac : volcan : 0.6] au [coucher du soleil : la nuit : 0.0].
-'''Un paysage de [montagne : ville : 0.75] avec un [lac : volcan : 0.52] au [coucher du soleil : la nuit : 0.25].
-'''Un paysage de [montagne : ville : 0.5] avec un [lac : volcan : 0.45] au [coucher du soleil : la nuit : 0.5].
-'''Un paysage de [montagne : ville : 0.25] avec un [lac : volcan : 0.38] au [coucher du soleil : la nuit : 0.75].
-'''Un paysage de [montagne : ville : 0.0] avec un [lac : volcan : 0.3] au [coucher du soleil : la nuit : 1.0].
+```
+Un paysage de [montagne : ville : 1.0] avec un [lac : volcan : 0.6] au [coucher du soleil : la nuit : 0.0].
+Un paysage de [montagne : ville : 0.75] avec un [lac : volcan : 0.52] au [coucher du soleil : la nuit : 0.25].
+Un paysage de [montagne : ville : 0.5] avec un [lac : volcan : 0.45] au [coucher du soleil : la nuit : 0.5].
+Un paysage de [montagne : ville : 0.25] avec un [lac : volcan : 0.38] au [coucher du soleil : la nuit : 0.75].
+Un paysage de [montagne : ville : 0.0] avec un [lac : volcan : 0.3] au [coucher du soleil : la nuit : 1.0].
+```
 -----
 
 
