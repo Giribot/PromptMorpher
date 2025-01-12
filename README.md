@@ -35,6 +35,7 @@ python promptmorpher.py
 
 Exemple du fichier texte généré:
 
+-----
 Prompt initial:
 Un paysage de montagne avec un lac au coucher du soleil.
 
@@ -44,6 +45,6 @@ Un paysage de [montagne : ville : 0.75] avec un [lac : volcan : 0.52] au [couche
 Un paysage de [montagne : ville : 0.5] avec un [lac : volcan : 0.45] au [coucher du soleil : la nuit : 0.5].
 Un paysage de [montagne : ville : 0.25] avec un [lac : volcan : 0.38] au [coucher du soleil : la nuit : 0.75].
 Un paysage de [montagne : ville : 0.0] avec un [lac : volcan : 0.3] au [coucher du soleil : la nuit : 1.0].
-
+-----
 
 
