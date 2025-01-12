@@ -1,21 +1,21 @@
 # PromptMorpher (FRENCH/ENGLISH)
-a generator in a text file of morphed prompt for  stable-diffusion-webui-forge
+**a generator in a text file of morphed prompt for  stable-diffusion-webui-forge**
 
 
-PromptMorpher
+**PromptMorpher**
 Un outil interactif pour personnaliser, mélanger et transformer vos prompts de manière dynamique.
 
-Description
+**Description**
 PromptMorpher est un programme interactif conçu pour les créateurs et utilisateurs d'intelligence artificielle générative, comme Stable Diffusion, qui souhaitent personnaliser et ajuster leurs prompts de manière fluide. Grâce à une interface conviviale basée sur Python et Tkinter, PromptMorpher vous permet de sélectionner des mots ou expressions dans un texte, de les remplacer dynamiquement, et de créer des transitions progressives entre deux concepts.
 
-Fonctionnalités principales
+**Fonctionnalités principales**
 Sélection intuitive de mots ou expressions : Cliquez pour choisir un mot ou une phrase dans le texte, puis configurez des remplacements.
 Keyword Blending : Mélangez deux concepts à l'aide de la syntaxe [mot1 : mot2 : facteur].
 Transitions progressives : Ajustez les valeurs de début et de fin (en pourcentage) et choisissez le sens des transitions (croissant ou décroissant).
 Personnalisation complète : Configurez plusieurs remplacements dans un seul texte.
 Génération de fichier : Exportez automatiquement les prompts générés dans un fichier texte.
 
-Prérequis
+**Prérequis**
 Python 3.7+
 Bibliothèques Python nécessaires :
 tkinter (inclus par défaut dans Python sur Windows)
@@ -25,15 +25,15 @@ Pour windows: cliquez sur RunMeFirst.bat pour installer si besoin automatiquemen
 Pour Linus, Mac: veuillez installer les librairies nécessaires (ouvrez le fichier baych "RunMeFirst.bat" avec un bloc note.
 
 
-Lancez le programme :
+**Lancez le programme :**
 Pour windows: cliquez sur RunMeFirst.bat
 
-Pour les autres:
+**Pour les autres:**
 python promptmorpher.py
 
 
 
-Exemple du fichier texte généré:
+**Exemple du fichier texte généré:**
 
 -----
 Prompt initial:
@@ -51,29 +51,29 @@ Un paysage de [montagne : ville : 0.0] avec un [lac : volcan : 0.3] au [coucher 
 -----
 
 # PromptMorpher
-a generator in a text file of morphed prompt for stable-diffusion-webui-forge
+**a generator in a text file of morphed prompt for stable-diffusion-webui-forge**
 
-PromptMorpher
+**romptMorpher**
 An interactive tool to dynamically customize, blend, and transform your prompts.
 
-Description
+**Description**
 PromptMorpher is an interactive program designed for generative AI creators and users, like Stable Diffusion, who want to seamlessly customize and adjust their prompts. With a user-friendly interface based on Python and Tkinter, PromptMorpher allows you to select words or phrases in a text, dynamically replace them, and create smooth transitions between two concepts.
 
-Key Features
+**Key Features**
 Intuitive Word or Phrase Selection: Click to select a word or phrase in the text, then configure replacements.
 Keyword Blending: Blend two concepts using the syntax [word1:word2:factor].
 Smooth Transitions: Adjust the start and end values ​​(in percentage) and choose the direction of the transitions (ascending or descending).
 Full Customization: Configure multiple replacements in a single text.
 File Generation: Automatically export generated prompts to a text file.
 
-Prerequisites
+**Prerequisites**
 Python 3.7+
 Required Python Libraries:
 tkinter (included by default in Python on Windows)
 Pillow (if needed for future extensions)
 Please look at the RunMeFirst.bat file
 For Windows: click on RunMeFirst.bat to automatically install the missing python libraries if needed and then run the script.
-For Linus, Mac: please install the necessary libraries (open the baych file "RunMeFirst.bat" with a notepad.
+For Linux, Mac: please install the necessary libraries (open the baych file "RunMeFirst.bat" with a notepad.
 
 Run the program:
 For windows: click on RunMeFirst.bat
@@ -81,7 +81,7 @@ For windows: click on RunMeFirst.bat
 For others:
 python promptmorpher.py
 
-Example of the generated text file:
+**Example of the generated text file:**
 
 -----
 Initial prompt:
