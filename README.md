@@ -3,12 +3,15 @@
 
 
 **PromptMorpher**
+
 Un outil interactif pour personnaliser, mélanger et transformer vos prompts de manière dynamique.
 
 **Description**
+
 PromptMorpher est un programme interactif conçu pour les créateurs et utilisateurs d'intelligence artificielle générative, comme Stable Diffusion, qui souhaitent personnaliser et ajuster leurs prompts de manière fluide. Grâce à une interface conviviale basée sur Python et Tkinter, PromptMorpher vous permet de sélectionner des mots ou expressions dans un texte, de les remplacer dynamiquement, et de créer des transitions progressives entre deux concepts.
 
 **Fonctionnalités principales**
+
 Sélection intuitive de mots ou expressions : Cliquez pour choisir un mot ou une phrase dans le texte, puis configurez des remplacements.
 Keyword Blending : Mélangez deux concepts à l'aide de la syntaxe [mot1 : mot2 : facteur].
 Transitions progressives : Ajustez les valeurs de début et de fin (en pourcentage) et choisissez le sens des transitions (croissant ou décroissant).
@@ -16,6 +19,7 @@ Personnalisation complète : Configurez plusieurs remplacements dans un seul tex
 Génération de fichier : Exportez automatiquement les prompts générés dans un fichier texte.
 
 **Prérequis**
+
 Python 3.7+
 Bibliothèques Python nécessaires :
 tkinter (inclus par défaut dans Python sur Windows)
@@ -51,15 +55,19 @@ Un paysage de [montagne : ville : 0.0] avec un [lac : volcan : 0.3] au [coucher 
 -----
 
 # PromptMorpher
+
 **a generator in a text file of morphed prompt for stable-diffusion-webui-forge**
 
 **romptMorpher**
+
 An interactive tool to dynamically customize, blend, and transform your prompts.
 
 **Description**
+
 PromptMorpher is an interactive program designed for generative AI creators and users, like Stable Diffusion, who want to seamlessly customize and adjust their prompts. With a user-friendly interface based on Python and Tkinter, PromptMorpher allows you to select words or phrases in a text, dynamically replace them, and create smooth transitions between two concepts.
 
 **Key Features**
+
 Intuitive Word or Phrase Selection: Click to select a word or phrase in the text, then configure replacements.
 Keyword Blending: Blend two concepts using the syntax [word1:word2:factor].
 Smooth Transitions: Adjust the start and end values ​​(in percentage) and choose the direction of the transitions (ascending or descending).
@@ -67,6 +75,7 @@ Full Customization: Configure multiple replacements in a single text.
 File Generation: Automatically export generated prompts to a text file.
 
 **Prerequisites**
+
 Python 3.7+
 Required Python Libraries:
 tkinter (included by default in Python on Windows)
