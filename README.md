@@ -58,7 +58,7 @@ Un paysage de [montagne : ville : 0.0] avec un [lac : volcan : 0.3] au [coucher 
 
 **a generator in a text file of morphed prompt for stable-diffusion-webui-forge**
 
-**romptMorpher**
+**PromptMorpher**
 
 An interactive tool to dynamically customize, blend, and transform your prompts.
 
