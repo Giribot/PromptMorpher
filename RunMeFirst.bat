@@ -1,42 +1,40 @@
 @echo off
-:: Vérifie si Python est installé
+REM Vérification de l'installation de Python
 python --version >nul 2>&1
-if %errorlevel% neq 0 (
+if %ERRORLEVEL% NEQ 0 (
     echo Python n'est pas installé sur ce système.
-    echo Veuillez installer Python depuis https://www.python.org/downloads/ et réessayez.
+    echo Veuillez installer Python depuis https://www.python.org/downloads/ et réessayer.
     pause
     exit /b
 )
 
-echo Python détecté. Vérification des bibliothèques nécessaires...
+echo Python est installé.
 
-:: Vérifie et installe les bibliothèques nécessaires
-pip install tk >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Une erreur est survenue lors de l'installation de tkinter.
-    echo Vérifiez vos paramètres réseau ou votre installation de Python.
-    pause
-    exit /b
-)
+REM Bibliothèques nécessaires pour ce projet
+set LIBS=os,string,tkinter
 
-pip install pillow >nul 2>&1
-if %errorlevel% neq 0 (
-    echo Une erreur est survenue lors de l'installation de Pillow.
-    echo Vérifiez vos paramètres réseau ou votre installation de Python.
-    pause
-    exit /b
+for %%L in (%LIBS%) do (
+    python -c "import %%L" >nul 2>&1
+    if %ERRORLEVEL% NEQ 0 (
+        echo La bibliothèque %%L n'est pas installée. Installation en cours...
+        python -m pip install %%L
+        if %ERRORLEVEL% NEQ 0 (
+            echo Erreur lors de l'installation de la bibliothèque %%L. Vérifiez votre connexion Internet ou pip.
+            pause
+            exit /b
+        )
+    )
 )
 
 echo Toutes les bibliothèques nécessaires sont installées.
 
-:: Lance le script Python
-echo Lancement du script...
-python "promptmorpher.py"
-if %errorlevel% neq 0 (
-    echo Une erreur est survenue lors de l'exécution du script Python.
+REM Lancement du script Python
+python promptmorpher.py
+if %ERRORLEVEL% NEQ 0 (
+    echo Une erreur s'est produite lors de l'exécution du script.
     pause
     exit /b
 )
 
+echo Script exécuté avec succès.
 pause
-exit
