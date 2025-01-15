@@ -28,7 +28,18 @@ class TextInputWindow:
         # Zone de texte pour saisir le prompt
         self.prompt_text = tk.Text(self.root, wrap="word", font=("Arial", 12))
         self.prompt_text.pack(expand=True, fill="both", padx=10, pady=10)
-        self.prompt_text.insert("1.0", "Entrez ou collez votre texte ici.")
+        
+        # Charger le texte de "last_prompt.txt" si disponible
+        self.load_last_prompt()
+
+    def load_last_prompt(self):
+        """Charge le dernier prompt sauvegardé si le fichier existe."""
+        if os.path.exists("last_prompt.txt"):
+            with open("last_prompt.txt", "r", encoding="utf-8") as file:
+                content = file.read().strip()
+                self.prompt_text.insert("1.0", content)
+        else:
+            self.prompt_text.insert("1.0", "Entrez ou collez votre texte ici.")
 
     def next_step(self):
         """Passe à l'étape suivante pour sélectionner les mots."""
@@ -208,6 +219,10 @@ class WordSelectionWindow:
                     prompt_final = prompt_final.replace(entry["selection"], entry["replacement"])
                 file.write("Prompt final :\n")
                 file.write(prompt_final + "\n\n")
+
+                # Sauvegarder le prompt final dans "last_prompt.txt"
+                with open("last_prompt.txt", "w", encoding="utf-8") as last_prompt_file:
+                    last_prompt_file.write(prompt_final)
 
                 # Générer les prompts intermédiaires
                 file.write("Prompts générés :\n")
