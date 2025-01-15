@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import os
+import string
+
 
 class TextInputWindow:
     """Fenêtre pour taper ou coller le texte initial."""
@@ -49,7 +51,8 @@ class WordSelectionWindow:
         self.root.title("Étape 2 : Sélectionnez les mots ou groupes de mots")
         self.root.geometry("900x600")
 
-        self.prompt_content = prompt_content
+        self.original_prompt = prompt_content  # Texte original, non modifié
+        self.modified_prompt = prompt_content  # Texte modifié (avec les formats)
         self.selected_blends = []  # Liste des sélections avec leurs configurations
         self.iterations = tk.IntVar(value=5)  # Nombre d'itérations par défaut
 
@@ -64,7 +67,7 @@ class WordSelectionWindow:
 
         # Zone de texte pour afficher et sélectionner les mots
         self.prompt_text = tk.Text(self.root, wrap="word", font=("Arial", 12))
-        self.prompt_text.insert("1.0", self.prompt_content)
+        self.prompt_text.insert("1.0", self.modified_prompt)
         self.prompt_text.pack(expand=True, fill="both", padx=10, pady=10)
 
         # Boutons en bas
@@ -74,18 +77,18 @@ class WordSelectionWindow:
         tk.Entry(bottom_frame, textvariable=self.iterations, width=5).pack(side="left", padx=5)
         tk.Button(bottom_frame, text="Terminé", command=self.finish).pack(side="right")
 
-        # Mise à jour des surbrillances
-        self.update_highlights()
-
         # Gestion de la sélection de texte
         self.prompt_text.bind("<ButtonRelease-1>", self.select_text)
 
     def select_text(self, event):
-        """Sélectionne un mot ou une phrase et ouvre une fenêtre de configuration."""
+        """Sélectionne un mot ou une phrase, nettoie les espaces et ponctuations, et ouvre une fenêtre de configuration."""
         try:
             start_idx = self.prompt_text.index("sel.first")
             end_idx = self.prompt_text.index("sel.last")
             selected_text = self.prompt_text.get(start_idx, end_idx).strip()
+
+            # Nettoyer les caractères de ponctuation autour de la sélection
+            selected_text = selected_text.strip(string.punctuation + " ")
 
             if not selected_text:
                 return
@@ -105,7 +108,7 @@ class WordSelectionWindow:
         """Fenêtre de configuration pour définir le blending."""
         config_window = tk.Toplevel(self.root)
         config_window.title("Configuration du remplacement")
-        config_window.geometry("500x400")
+        config_window.geometry("500x500")
 
         # Instructions
         tk.Label(config_window, text=f"Configuration pour '{selected_text}'", font=("Arial", 12)).pack(pady=10)
@@ -139,26 +142,42 @@ class WordSelectionWindow:
                 "end": end_value.get() / 100,
                 "direction": direction.get(),
             })
-            self.update_highlights()
+            self.apply_replacements()
             config_window.destroy()
-            messagebox.showinfo("Succès", f"Blending ajouté : '{selected_text}' -> '{replacement_text}'")
+            messagebox.showinfo("Succès", f"Blending ajouté : '{selected_text}' → '{replacement_text}'")
 
         tk.Button(config_window, text="Valider", command=save_configuration).pack(pady=20)
 
+    def apply_replacements(self):
+        """Réapplique les remplacements pour éviter les duplications ou erreurs d'indice."""
+        self.modified_prompt = self.original_prompt  # Réinitialiser au texte original
+        for entry in self.selected_blends:
+            selection = entry['selection']
+            replacement = entry['replacement']
+            formatted_text = f'"{selection}" → "{replacement}"'
+            self.modified_prompt = self.modified_prompt.replace(selection, formatted_text)
+
+        # Met à jour l'affichage avec les surbrillances
+        self.prompt_text.delete("1.0", "end")
+        self.prompt_text.insert("1.0", self.modified_prompt)
+        self.update_highlights()
+
     def update_highlights(self):
-        """Surligne les mots sélectionnés en rouge."""
+        """Surligne les mots modifiés en rouge et gras."""
         self.prompt_text.tag_remove("highlight", "1.0", "end")
         for entry in self.selected_blends:
             selection = entry['selection']
+            replacement = entry['replacement']
+            formatted_text = f'"{selection}" → "{replacement}"'
             start_idx = "1.0"
             while True:
-                start_idx = self.prompt_text.search(selection, start_idx, stopindex="end", nocase=False)
+                start_idx = self.prompt_text.search(formatted_text, start_idx, stopindex="end")
                 if not start_idx:
                     break
-                end_idx = f"{start_idx}+{len(selection)}c"
+                end_idx = f"{start_idx}+{len(formatted_text)}c"
                 self.prompt_text.tag_add("highlight", start_idx, end_idx)
                 start_idx = end_idx
-        self.prompt_text.tag_config("highlight", foreground="red")
+        self.prompt_text.tag_config("highlight", foreground="red", font=("Arial", 12, "bold"))
 
     def get_unique_filename(self, base_name="generated_prompts", extension=".txt"):
         """Génère un nom de fichier unique avec un numéro croissant."""
@@ -177,31 +196,34 @@ class WordSelectionWindow:
 
         file_name = self.get_unique_filename()
 
-        with open(file_name, "w") as file:
-            file.write("Prompt initial :\n")
-            file.write(self.prompt_content + "\n\nPrompts générés :\n")
-            for i in range(self.iterations.get()):
-                factor_step = i / (self.iterations.get() - 1)
-                modified_prompt = self.prompt_content
+        try:
+            with open(file_name, "w", encoding="utf-8") as file:  # Encodage UTF-8
+                # Écrire le prompt initial
+                file.write("Prompt initial :\n")
+                file.write(self.original_prompt + "\n\n")
 
+                # Générer le prompt final
+                prompt_final = self.original_prompt
                 for entry in self.selected_blends:
-                    selection = entry['selection']
-                    replacement = entry['replacement']
-                    start = entry['start']
-                    end = entry['end']
-                    direction = entry['direction']
+                    prompt_final = prompt_final.replace(entry["selection"], entry["replacement"])
+                file.write("Prompt final :\n")
+                file.write(prompt_final + "\n\n")
 
-                    factor = start + (end - start) * factor_step
-                    if direction == "décroissant":
-                        factor = end - (factor - start)
+                # Générer les prompts intermédiaires
+                file.write("Prompts générés :\n")
+                for i in range(self.iterations.get()):
+                    factor = i / (self.iterations.get() - 1)
+                    modified_prompt = self.original_prompt
+                    for entry in self.selected_blends:
+                        blended_text = f"[{entry['selection']} : {entry['replacement']} : {round(factor, 2)}]"
+                        modified_prompt = modified_prompt.replace(entry["selection"], blended_text)
+                    file.write(modified_prompt + "\n")
 
-                    blended_text = f"[{selection} : {replacement} : {round(factor, 2)}]"
-                    modified_prompt = modified_prompt.replace(selection, blended_text)
+            messagebox.showinfo("Succès", f"Fichier généré : {file_name}")
+            self.root.destroy()
 
-                file.write(modified_prompt + "\n")
-
-        messagebox.showinfo("Succès", f"Fichier généré : {file_name}")
-        self.root.destroy()
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur est survenue lors de la génération du fichier :\n{e}")
 
 
 if __name__ == "__main__":
